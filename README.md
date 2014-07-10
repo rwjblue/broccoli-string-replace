@@ -2,6 +2,11 @@
 
 [![Build Status](https://travis-ci.org/rjackson/broccoli-string-replace.svg?branch=master)](https://travis-ci.org/rjackson/broccoli-string-replace)
 
+## Summary
+
+Uses [String.prototype.replace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace) to
+replace matched patterns.
+
 ## Installation
 
 ```bash
