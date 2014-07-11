@@ -1,6 +1,6 @@
 {
   "name": "broccoli-string-replace",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Broccoli plugin to replace a matched string with a replacement.",
   "main": "index.js",
   "author": "Robert Jackson",
