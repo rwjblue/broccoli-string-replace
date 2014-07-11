@@ -36,7 +36,6 @@ SimpleReplace.prototype.getDestFilePath = function(relativePath) {
 };
 
 SimpleReplace.prototype.processString = function (str) {
-  debugger
   for (var i = 0, l = this.patterns.length; i < l; i++) {
     var pattern = this.patterns[i];
 
