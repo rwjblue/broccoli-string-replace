@@ -1,6 +1,6 @@
 # Broccoli's String Replace
 
-[![Build Status](https://travis-ci.org/rjackson/broccoli-string-replace.svg?branch=master)](https://travis-ci.org/rjackson/broccoli-string-replace)
+[![Build Status](https://travis-ci.org/rwjblue/broccoli-string-replace.svg?branch=master)](https://travis-ci.org/rjackson/broccoli-string-replace)
 
 ## Summary
 
