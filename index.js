@@ -1,5 +1,11 @@
 var Filter = require('broccoli-filter');
 
+function isMatchedArray(arr, target) {
+  return arr.filter(function(x) {
+    return target.match(x);
+  }).length > 0;
+}
+
 function SimpleReplace (inputTree, options) {
   if (!(this instanceof SimpleReplace)) return new SimpleReplace(inputTree, options);
 
@@ -25,6 +31,8 @@ SimpleReplace.prototype.constructor = SimpleReplace;
 
 SimpleReplace.prototype.canProcessFile = function (relativePath) {
   if (this.files.indexOf(relativePath) > -1) {
+    return true;
+  } else if (isMatchedArray(this.files, relativePath)) {
     return true;
   } else {
     return null;
