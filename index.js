@@ -1,10 +1,5 @@
 var Filter = require('broccoli-filter');
-
-function isMatchedArray(arr, target) {
-  return arr.filter(function(x) {
-    return target.match(x);
-  }).length > 0;
-}
+var Minimatch = require('minimatch').Minimatch;
 
 function SimpleReplace (inputTree, options) {
   if (!(this instanceof SimpleReplace)) return new SimpleReplace(inputTree, options);
@@ -15,6 +10,7 @@ function SimpleReplace (inputTree, options) {
 
   this.inputTree   = inputTree;
   this.files       = options.files || [];
+  this.files       = this.files.map(this._processPattern);
   this.patterns    = options.patterns;
   this.description = options.description;
 
@@ -29,14 +25,27 @@ function SimpleReplace (inputTree, options) {
 SimpleReplace.prototype = Object.create(Filter.prototype);
 SimpleReplace.prototype.constructor = SimpleReplace;
 
-SimpleReplace.prototype.canProcessFile = function (relativePath) {
-  if (this.files.indexOf(relativePath) > -1) {
-    return true;
-  } else if (isMatchedArray(this.files, relativePath)) {
-    return true;
-  } else {
-    return null;
+SimpleReplace.prototype._processPattern = function(pattern) {
+  if (pattern instanceof RegExp) {
+    return pattern;
   }
+  var type = typeof pattern;
+  if (type === 'string') {
+    return new Minimatch(pattern);
+  }
+  throw new Error('include/exclude patterns can be a RegExp, or glob string. You supplied `' + typeof pattern +'`.');
+};
+
+SimpleReplace.prototype.canProcessFile = function (relativePath) {
+  var len = this.files.filter(function(pattern) {
+    if (pattern instanceof RegExp) {
+      return pattern.test(relativePath);
+    } else if (pattern instanceof Minimatch) {
+      return pattern.match(relativePath);
+    }
+    return false;
+  }).length;
+  return len;
 }
 
 SimpleReplace.prototype.getDestFilePath = function(relativePath) {
