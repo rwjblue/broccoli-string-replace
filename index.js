@@ -33,7 +33,10 @@ SimpleReplace.prototype._processPattern = function(pattern) {
   if (type === 'string') {
     return new Minimatch(pattern);
   }
-  throw new Error('include/exclude patterns can be a RegExp, or glob string. You supplied `' + typeof pattern +'`.');
+  if (type === 'function') {
+    return pattern;
+  }
+  throw new Error('include/exclude patterns can be a RegExp, glob string, or function. You supplied `' + typeof pattern +'`.');
 };
 
 SimpleReplace.prototype.canProcessFile = function (relativePath) {
@@ -42,6 +45,8 @@ SimpleReplace.prototype.canProcessFile = function (relativePath) {
       return pattern.test(relativePath);
     } else if (pattern instanceof Minimatch) {
       return pattern.match(relativePath);
+    } else if (typeof pattern === 'function') {
+      return pattern(relativePath);
     }
     return false;
   }).length;
