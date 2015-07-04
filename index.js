@@ -36,7 +36,7 @@ SimpleReplace.prototype._processPattern = function(pattern) {
   if (type === 'function') {
     return pattern;
   }
-  throw new Error('include/exclude patterns can be a RegExp, glob string, or function. You supplied `' + typeof pattern +'`.');
+  throw new Error('files patterns can be a RegExp, glob string, or function. You supplied `' + typeof pattern +'`.');
 };
 
 SimpleReplace.prototype.canProcessFile = function (relativePath) {
