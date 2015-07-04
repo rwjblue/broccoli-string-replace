@@ -1,4 +1,5 @@
 var Filter = require('broccoli-filter');
+var Minimatch = require('minimatch').Minimatch;
 
 function SimpleReplace (inputTree, options) {
   if (!(this instanceof SimpleReplace)) return new SimpleReplace(inputTree, options);
@@ -9,6 +10,7 @@ function SimpleReplace (inputTree, options) {
 
   this.inputTree   = inputTree;
   this.files       = options.files || [];
+  this.files       = this.files.map(this._processPattern);
   this.patterns    = options.patterns;
   this.description = options.description;
 
@@ -23,12 +25,32 @@ function SimpleReplace (inputTree, options) {
 SimpleReplace.prototype = Object.create(Filter.prototype);
 SimpleReplace.prototype.constructor = SimpleReplace;
 
-SimpleReplace.prototype.canProcessFile = function (relativePath) {
-  if (this.files.indexOf(relativePath) > -1) {
-    return true;
-  } else {
-    return null;
+SimpleReplace.prototype._processPattern = function(pattern) {
+  if (pattern instanceof RegExp) {
+    return pattern;
   }
+  var type = typeof pattern;
+  if (type === 'string') {
+    return new Minimatch(pattern);
+  }
+  if (type === 'function') {
+    return pattern;
+  }
+  throw new Error('files patterns can be a RegExp, glob string, or function. You supplied `' + typeof pattern +'`.');
+};
+
+SimpleReplace.prototype.canProcessFile = function (relativePath) {
+  var len = this.files.filter(function(pattern) {
+    if (pattern instanceof RegExp) {
+      return pattern.test(relativePath);
+    } else if (pattern instanceof Minimatch) {
+      return pattern.match(relativePath);
+    } else if (typeof pattern === 'function') {
+      return pattern(relativePath);
+    }
+    return false;
+  }).length;
+  return len;
 }
 
 SimpleReplace.prototype.getDestFilePath = function(relativePath) {

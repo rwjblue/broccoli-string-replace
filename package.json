@@ -17,7 +17,8 @@
     "javascript"
   ],
   "dependencies": {
-    "broccoli-filter": "~0.1.6"
+    "broccoli-filter": "~0.1.6",
+    "minimatch": "^2.0.8"
   },
   "devDependencies": {
     "mocha": "~1.18.2",
