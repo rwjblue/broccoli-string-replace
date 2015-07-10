@@ -22,8 +22,36 @@ Replace `VERSION_STRING` with `1.6.5` in `app/main.js`:
 ```javascript
 var replace = require('broccoli-string-replace');
 
+// files with strings
 var tree = replace('app', {
   files: [ 'main.js' ],
+  pattern: {
+    match: /VERSION_STRING/g,
+    replacement: '1.6.5'
+  }
+});
+
+// files with globs
+var tree = replace('app', {
+  files: [ '*.js' ],
+  pattern: {
+    match: /VERSION_STRING/g,
+    replacement: '1.6.5'
+  }
+});
+
+// files with regular expressions
+var tree = replace('app', {
+  files: [ new RegExp('main' + '(.*js)') ],
+  pattern: {
+    match: /VERSION_STRING/g,
+    replacement: '1.6.5'
+  }
+});
+
+// files with functions
+var tree = replace('app', {
+  files: [ function(x) { return x.indexOf('main') > -1; }  ],
   pattern: {
     match: /VERSION_STRING/g,
     replacement: '1.6.5'
@@ -39,7 +67,7 @@ var tree = replace('app', {
 
 `options.files` *{Array}*
 
-The list of files to process the list of patterns against. This is an array of strings.
+The list of files to process the list of patterns against. This is an array of strings, globs, regular expressions, or functions.
 
 ---
 
