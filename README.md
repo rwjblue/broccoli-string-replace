@@ -19,10 +19,10 @@ npm install --save-dev broccoli-string-replace
 
 Replace `VERSION_STRING` with `1.6.5` in `app/main.js`:
 
+Search for files by string pattern
 ```javascript
 var replace = require('broccoli-string-replace');
 
-// files with strings
 var tree = replace('app', {
   files: [ 'main.js' ],
   pattern: {
@@ -30,8 +30,12 @@ var tree = replace('app', {
     replacement: '1.6.5'
   }
 });
+```
 
-// files with globs
+Search for files using a glob pattern
+```javascript
+var replace = require('broccoli-string-replace');
+
 var tree = replace('app', {
   files: [ '*.js' ],
   pattern: {
@@ -39,8 +43,12 @@ var tree = replace('app', {
     replacement: '1.6.5'
   }
 });
+```
 
-// files with regular expressions
+Search for files using a regular expression
+```javascript
+var replace = require('broccoli-string-replace');
+
 var tree = replace('app', {
   files: [ new RegExp('main' + '(.*js)') ],
   pattern: {
@@ -48,7 +56,11 @@ var tree = replace('app', {
     replacement: '1.6.5'
   }
 });
+```
 
+Search for files using a function
+```javascript
+var replace = require('broccoli-string-replace');
 // files with functions
 var tree = replace('app', {
   files: [ function(x) { return x.indexOf('main') > -1; }  ],
