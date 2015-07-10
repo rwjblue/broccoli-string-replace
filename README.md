@@ -61,7 +61,7 @@ var tree = replace('app', {
 Search for files using a function
 ```javascript
 var replace = require('broccoli-string-replace');
-// files with functions
+
 var tree = replace('app', {
   files: [ function(x) { return x.indexOf('main') > -1; }  ],
   pattern: {
