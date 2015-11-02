@@ -1,4 +1,4 @@
-var Filter = require('broccoli-filter');
+var Filter = require('broccoli-persistent-filter');
 var Minimatch = require('minimatch').Minimatch;
 
 function SimpleReplace (inputTree, options) {
@@ -22,6 +22,7 @@ function SimpleReplace (inputTree, options) {
     this.patterns = [];
   }
 };
+
 SimpleReplace.prototype = Object.create(Filter.prototype);
 SimpleReplace.prototype.constructor = SimpleReplace;
 
