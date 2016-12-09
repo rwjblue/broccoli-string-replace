@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rjackson/broccoli-string-replace.git"
+    "url": "https://github.com/rwjblue/broccoli-string-replace.git"
   },
   "scripts": {
     "test": "mocha tests/"
