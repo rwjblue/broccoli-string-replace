@@ -39,7 +39,20 @@ var tree = replace('app', {
 
 `options.files` *{Array}*
 
-The list of files to process the list of patterns against. This is an array of strings.
+The list of files to process the list of patterns against. The array can contain any of the following:
+- strings (glob patterns will work)
+- functions (input is a file name, output should be boolean)
+- regex
+
+```javascript
+files: [
+  'file-name.js',                              // matches just "file-name.js"
+  '*.css',                                     // matches all CSS files,
+  function(name) {name.indexOf('bingo') > -1}, // matches all filenames containing substring "bingo",
+  /(mini-)?tacos\.hbs/,                         // matches "mini-tacos.hbs" and "tacos.hbs"
+]
+
+```
 
 ---
 
